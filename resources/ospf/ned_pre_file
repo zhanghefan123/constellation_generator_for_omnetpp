@@ -1,0 +1,52 @@
+import osgNodes.ChannelController;
+import osgNodes.GroundCommNode;
+import osgNodes.OsgEarthScene;
+import osgNodes.SatComm;
+import channels.SatToSat;
+import channels.SatToGround;
+import inet.common.scenario.ScenarioManager;
+import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
+import osgNodes.OspfSatellite;
+network OsgEarthNet
+{
+	parameters:
+		int rngNum = default(0);
+		double sendInterval = default(1);
+	types:
+		channel SatToSat_10Mbps extends SatToSat
+		{
+			datarate=10Mbps;
+		}
+		channel SatToSat_100Mbps extends SatToSat
+		{
+			datarate=100Mbps;
+		}
+		channel SatToSat_1Gbps extends SatToSat
+		{
+			datarate=1Gbps;
+		}
+		channel SatToGround_10Mbps extends SatToGround
+		{
+			datarate=10Mbps;
+		}
+		channel SatToGround_100Mbps extends SatToGround
+		{
+			datarate=100Mbps;
+		}
+		channel SatToGround_1Gbps extends SatToGround
+		{
+			datarate=1Gbps;
+		}
+	submodules:
+		osgEarthScene: OsgEarthScene {
+		}
+		channelController: ChannelController {
+			parameters:
+				config = xmldoc("./channel.xml");
+		}
+		configurator: Ipv4NetworkConfigurator {
+			parameters:
+				config = xmldoc("./address.xml");
+				addStaticRoutes = false;
+				addDefaultRoutes = false;
+		}

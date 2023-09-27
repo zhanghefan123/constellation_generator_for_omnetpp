@@ -1,0 +1,23 @@
+simtime-resolution = ms
+
+# set satellite mobility params
+*.SAT*.mobility.typename = "SatMobility"
+*.SAT*.mobility.modelURL = "satellite.osgb"
+*.SAT*.mobility.labelColor = "#ffff00ff"
+
+# set channel controller params
+**.ChannelControllerModule = "channelController"
+
+# config the osgEarthScene
+*.osgEarthScene.scene = "simple.earth"
+
+# disable recording
+**.statistic-recording = false
+**.scalar-recording = false
+**.vector-recording = false
+
+# config the lipsin module
+OsgEarthNet.*.lipsinConfig = xmldoc("./lipsinConfig.xml")
+OsgEarthNet.*.lipsinSender.destinationSatellites = xmldoc("./destinationSatellites.xml")
+
+

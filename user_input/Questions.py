@@ -36,6 +36,15 @@ ROUTING_PROTOCOL_QUESTION = [
 
 CONSTELLATION_QUESTION = [
     {
+        "type": "list",
+        "name": "constellation_type",
+        "message": "What is the type of your constellation?",
+        "choices": [
+            "Walker_Star",
+            "Walker_Delta",
+        ]
+    },
+    {
         "type": "input",
         "name": "orbit_number",
         "message": "How many orbits do you want?",
@@ -71,7 +80,6 @@ CONSTELLATION_QUESTION = [
         "validate": Validator.FloatValidator
     }
 ]
-
 
 IF_ADD_LIPSIN_APP_QUESTION = [
     {

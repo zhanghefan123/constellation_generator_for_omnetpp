@@ -64,6 +64,8 @@ class UserInput:
         """
         # get project name
         projectName = self.answersForProject["project_name"]
+        # get the type of the constellation
+        constellationType = self.answersForConstellation["constellation_type"]
         # get constellation parameters
         orbitNumber = int(self.answersForConstellation["orbit_number"])
         satPerOrbit = int(self.answersForConstellation["sat_per_orbit"])
@@ -76,7 +78,7 @@ class UserInput:
         self.logger.info("Generating constellation...")
         constellation = Constellation.Constellation(orbitNumber, satPerOrbit, inclination,
                                                     startingPhase, altitude, linkBandWidth,
-                                                    routingProtocol, self.lipsin_apps)
+                                                    routingProtocol, self.lipsin_apps, constellationType)
         # create project
         return Project.Project(projectName, constellation)
 

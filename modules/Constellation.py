@@ -25,7 +25,7 @@ class Constellation:
 
     def __init__(self, orbitNumber, satPerOrbit, inclination,
                  startingPhase, altitude, linkBandWidth,
-                 routingProtocol, lipsin_apps):
+                 routingProtocol, lipsin_apps, constellation_type):
         """
         initialize the constellation object
         :param orbitNumber:  number of orbits
@@ -34,7 +34,8 @@ class Constellation:
         :param startingPhase:  starting phase
         :param altitude:  altitude
         :param linkBandWidth:  bandwidth of inter satellite link
-        :param routingProtocol:  the routing protocol on satellites
+        :param routingProtocol:  the routing protocol on satellite
+        :param constellation_type: the type of the constellation
         """
         self.orbitNumber = orbitNumber
         self.satPerOrbit = satPerOrbit
@@ -44,6 +45,7 @@ class Constellation:
         self.linkBandWidth = linkBandWidth
         self.routingProtocol = routingProtocol
         self.lipsin_apps = lipsin_apps
+        self.constellationType = constellation_type
 
         self.satellites = []  # all the satellites in the constellation
         self.ISLs = []  # no direction link
@@ -62,54 +64,124 @@ class Constellation:
         generate the constellation
         :return:
         """
-        angle = 180
-        for orbitId in range(0, self.orbitNumber):
-            for i in range(self.satPerOrbit * orbitId, self.satPerOrbit * (orbitId + 1)):
-                orbitNormal = [round(math.cos(orbitId * (angle / self.orbitNumber) * math.pi / 180), 4),
-                               round(math.sin(orbitId * (angle / self.orbitNumber) * math.pi / 180), 4),
-                               round(math.cos(self.inclination * math.pi / 180), 4)]
-                if orbitId & 1 == 0:  # 偶数
-                    startingPhase = round((i - self.satPerOrbit * orbitId) * (360 / self.satPerOrbit), 4)
-                else:  # 奇数
-                    startingPhase = round((i - self.satPerOrbit * orbitId + 0.5) * (360 / self.satPerOrbit), 4)
+        if self.constellationType == "Walker_Star":
+            angle = 180
+            for orbitId in range(0, self.orbitNumber):
+                for i in range(self.satPerOrbit * orbitId, self.satPerOrbit * (orbitId + 1)):
+                    orbitNormal = [round(math.cos(orbitId * (angle / self.orbitNumber) * math.pi / 180), 4),
+                                   round(math.sin(orbitId * (angle / self.orbitNumber) * math.pi / 180), 4),
+                                   round(math.cos(self.inclination * math.pi / 180), 4)]
+                    if orbitId & 1 == 0:  # 偶数
+                        startingPhase = round((i - self.satPerOrbit * orbitId) * (360 / self.satPerOrbit), 4)
+                    else:  # 奇数
+                        startingPhase = round((i - self.satPerOrbit * orbitId + 0.5) * (360 / self.satPerOrbit), 4)
 
-                if orbitId * (angle / self.orbitNumber) >= 90:
-                    startingPhase += 180
-                    startingPhase %= 360
-                singleSatellite = Satellite.Satellite(i, orbitId, i % self.satPerOrbit,
-                                                      [orbitNormal[0], orbitNormal[1], orbitNormal[2]],
-                                                      startingPhase, self.altitude)
-                self.satellites.append(singleSatellite)
+                    if orbitId * (angle / self.orbitNumber) >= 90:
+                        startingPhase += 180
+                        startingPhase %= 360
+                    singleSatellite = Satellite.Satellite(i, orbitId, i % self.satPerOrbit,
+                                                          [orbitNormal[0], orbitNormal[1], orbitNormal[2]],
+                                                          startingPhase, self.altitude)
+                    self.satellites.append(singleSatellite)
+        elif self.constellationType == "Walker_Delta":
+            angle = 360
+            for orbitId in range(0, self.orbitNumber):
+                for i in range(self.satPerOrbit * orbitId, self.satPerOrbit * (orbitId + 1)):
+                    # 轨道范数
+                    orbitNormal = [round(math.cos(orbitId * (angle / self.orbitNumber) * math.pi / 180), 4),
+                                   round(math.sin(orbitId * (angle / self.orbitNumber) * math.pi / 180), 4),
+                                   round(math.cos(self.inclination * math.pi / 180), 4)]
+                    if orbitId & 1 == 0:  # 偶数
+                        startingPhase = round((i - self.satPerOrbit * orbitId) * (360 / self.satPerOrbit), 4)
+                    else:
+                        startingPhase = round((i - self.satPerOrbit * orbitId + 0.5) * (360 / self.satPerOrbit), 4)
+                    singleSatellite = Satellite.Satellite(i, orbitId, i % self.satPerOrbit,
+                                                          [orbitNormal[0], orbitNormal[1], orbitNormal[2]],
+                                                          startingPhase, self.altitude)
+                    self.satellites.append(singleSatellite)
 
     def constellationInterSatelliteLinksGeneration(self):
         """
         generate the constellation links
         :return:
         """
-        # traverse all the satellites
-        for singleSatellite in self.satellites:
-            sourceOrbitId = singleSatellite.orbit_id
-            sourceIndexInOrbit = singleSatellite.index_in_orbit
-            sourceIndex = singleSatellite.satellite_id
-            destOrbitId = sourceOrbitId  # in the same orbit
-            destIndexInOrbit = (sourceIndexInOrbit + 1) % self.satPerOrbit  # next satellite index in the same orbit
-            destIndex = destOrbitId * self.satPerOrbit + destIndexInOrbit  # next satellite id
-            # create the intra-orbit-isl
-            linkId = len(self.ISLs)
-            linkTmp = InterSatelliteLink.InterSatelliteLink(linkId, self.satellites[sourceIndex],
-                                                            self.satellites[sourceIndex].interfaceIndex,
-                                                            self.satellites[destIndex],
-                                                            self.satellites[destIndex].interfaceIndex,
-                                                            self.linkBandWidth,
-                                                            InterSatelliteLink.InterSatelliteLink.LinkType.INTRA_ORBIT)
-            self.satellites[sourceIndex].interfaceIndex += 1
-            self.satellites[destIndex].interfaceIndex += 1
-            self.ISLs.append(linkTmp)
-            # create the inter-orbit-isl
-            destOrbitId = sourceOrbitId + 1  # next orbit
-            destIndexInOrbit = sourceIndexInOrbit  # same index in the next orbit
-            if destOrbitId < self.orbitNumber:
-                destIndex = destOrbitId * self.satPerOrbit + destIndexInOrbit
+        if self.constellationType == "Walker_Star":
+            # traverse all the satellites
+            for singleSatellite in self.satellites:
+                sourceOrbitId = singleSatellite.orbit_id
+                sourceIndexInOrbit = singleSatellite.index_in_orbit
+                sourceIndex = singleSatellite.satellite_id
+                destOrbitId = sourceOrbitId  # in the same orbit
+                destIndexInOrbit = (sourceIndexInOrbit + 1) % self.satPerOrbit  # next satellite index in the same orbit
+                destIndex = destOrbitId * self.satPerOrbit + destIndexInOrbit  # next satellite id
+                # create the intra-orbit-isl
+                linkId = len(self.ISLs)
+                linkTmp = InterSatelliteLink.InterSatelliteLink(linkId, self.satellites[sourceIndex],
+                                                                self.satellites[sourceIndex].interfaceIndex,
+                                                                self.satellites[destIndex],
+                                                                self.satellites[destIndex].interfaceIndex,
+                                                                self.linkBandWidth,
+                                                                InterSatelliteLink.InterSatelliteLink.LinkType.INTRA_ORBIT)
+                self.satellites[sourceIndex].interfaceIndex += 1
+                self.satellites[destIndex].interfaceIndex += 1
+                self.ISLs.append(linkTmp)
+                # create the inter-orbit-isl
+                destOrbitId = sourceOrbitId + 1  # next orbit
+                destIndexInOrbit = sourceIndexInOrbit  # same index in the next orbit
+                if destOrbitId < self.orbitNumber:
+                    destIndex = destOrbitId * self.satPerOrbit + destIndexInOrbit
+                    linkId = len(self.ISLs)
+                    linkTmp = InterSatelliteLink.InterSatelliteLink(linkId, self.satellites[sourceIndex],
+                                                                    self.satellites[sourceIndex].interfaceIndex,
+                                                                    self.satellites[destIndex],
+                                                                    self.satellites[destIndex].interfaceIndex,
+                                                                    self.linkBandWidth,
+                                                                    InterSatelliteLink.InterSatelliteLink.LinkType.
+                                                                    INTER_ORBIT)
+                    self.satellites[sourceIndex].interfaceIndex += 1
+                    self.satellites[destIndex].interfaceIndex += 1
+                    self.ISLs.append(linkTmp)
+        elif self.constellationType == "Walker_Delta":
+            # traverse all the satellites
+            for singleSatellite in self.satellites:
+                sourceOrbitId = singleSatellite.orbit_id
+                sourceIndexInOrbit = singleSatellite.index_in_orbit
+                sourceIndex = singleSatellite.satellite_id
+                destOrbitId = sourceOrbitId  # first create link in the same orbit
+                destIndexInOrbit = (sourceIndexInOrbit + 1) % self.satPerOrbit  # next satellite index in the same orbit
+                destIndex = destOrbitId * self.satPerOrbit + destIndexInOrbit  # next satellite id
+                # create the intra-orbit-isl
+                linkId = len(self.ISLs)
+                linkTmp = InterSatelliteLink.InterSatelliteLink(linkId, self.satellites[sourceIndex],
+                                                                self.satellites[sourceIndex].interfaceIndex,
+                                                                self.satellites[destIndex],
+                                                                self.satellites[destIndex].interfaceIndex,
+                                                                self.linkBandWidth,
+                                                                InterSatelliteLink.InterSatelliteLink.LinkType.INTRA_ORBIT)
+                self.satellites[sourceIndex].interfaceIndex += 1
+                self.satellites[destIndex].interfaceIndex += 1
+                self.ISLs.append(linkTmp)
+                # create the inter-orbit-isl
+                destOrbitId = sourceOrbitId + 1
+                # same index in the next orbit
+                destIndexInOrbit = sourceIndexInOrbit
+                if destOrbitId < self.orbitNumber:
+                    destIndex = destOrbitId * self.satPerOrbit + destIndexInOrbit
+                    linkId = len(self.ISLs)
+                    linkTmp = InterSatelliteLink.InterSatelliteLink(linkId, self.satellites[sourceIndex],
+                                                                    self.satellites[sourceIndex].interfaceIndex,
+                                                                    self.satellites[destIndex],
+                                                                    self.satellites[destIndex].interfaceIndex,
+                                                                    self.linkBandWidth,
+                                                                    InterSatelliteLink.InterSatelliteLink.LinkType.
+                                                                    INTER_ORBIT)
+                    self.satellites[sourceIndex].interfaceIndex += 1
+                    self.satellites[destIndex].interfaceIndex += 1
+                    self.ISLs.append(linkTmp)
+
+            # calculate the inter-orbit links among the first and last orbit ISLs
+            for sourceIndex in range(0, self.satPerOrbit):
+                destIndex = (self.orbitNumber - 1) * self.satPerOrbit + sourceIndex
                 linkId = len(self.ISLs)
                 linkTmp = InterSatelliteLink.InterSatelliteLink(linkId, self.satellites[sourceIndex],
                                                                 self.satellites[sourceIndex].interfaceIndex,

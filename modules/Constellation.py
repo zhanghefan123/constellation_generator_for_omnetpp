@@ -4,7 +4,9 @@ from enum import Enum
 
 
 def convert_str_to_routing_protocol(routingProtocolStr):
-    if routingProtocolStr == "IP_OSPF":
+    if routingProtocolStr == "None":
+        return Constellation.RoutingProtocols.NONE
+    elif routingProtocolStr == "IP_OSPF":
         return Constellation.RoutingProtocols.IP_OSPF
     elif routingProtocolStr == "LIPSIN":
         return Constellation.RoutingProtocols.LIPSIN

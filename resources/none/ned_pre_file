@@ -6,7 +6,7 @@ import nedFiles.channels.SatToSat;
 import nedFiles.channels.SatToGround;
 import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import nedFiles.osgNodes.OspfSatellite;
+import nedFiles.osgNodes.SatHost;
 network OsgEarthNet
 {
 	parameters:

@@ -17,6 +17,7 @@ class Constellation:
         """
         routing protocols
         """
+        NONE = 0,
         IP_OSPF = 1,
         LIPSIN = 2,
 

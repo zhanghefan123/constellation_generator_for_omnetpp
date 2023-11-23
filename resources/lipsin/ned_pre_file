@@ -1,9 +1,9 @@
-import osgNodes.ChannelController;
-import osgNodes.GroundCommNode;
-import osgNodes.OsgEarthScene;
-import osgNodes.SatComm;
-import channels.SatToSat;
-import channels.SatToGround;
+import nedFiles.osgNodes.ChannelController;
+import nedFiles.osgNodes.GroundCommNode;
+import nedFiles.osgNodes.OsgEarthScene;
+import nedFiles.osgNodes.SatComm;
+import nedFiles.channels.SatToSat;
+import nedFiles.channels.SatToGround;
 import inet.projects.lipsin.lipsin_node.LipsinSatellite;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.projects.lipsin.lipsin_global_recorder.LipsinGlobalRecorder;

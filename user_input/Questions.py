@@ -28,6 +28,7 @@ ROUTING_PROTOCOL_QUESTION = [
         "name": "protocol",
         "message": "what is the routing protocol on your satellite?",
         "choices": [
+            "None",
             "IP_OSPF",
             "LIPSIN",
         ]

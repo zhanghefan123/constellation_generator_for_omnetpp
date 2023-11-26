@@ -7,6 +7,7 @@ import nedFiles.channels.SatToGround;
 import inet.projects.lipsin.lipsin_node.LipsinSatellite;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import inet.projects.lipsin.lipsin_global_recorder.LipsinGlobalRecorder;
+import inet.projects.generic_tools.global_module.GlobalModule;
 network OsgEarthNet
 {
 	parameters:
@@ -49,4 +50,7 @@ network OsgEarthNet
                 config = xml("<config><interface among='**' address='10.x.x.x' netmask='255.255.255.252'/></config>");
                 addStaticRoutes = false;
                 addDefaultRoutes = false;
+        }
+        globalModule: GlobalModule {
+
         }

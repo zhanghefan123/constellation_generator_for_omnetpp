@@ -7,6 +7,7 @@ import nedFiles.channels.SatToGround;
 import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import nedFiles.osgNodes.SatHost;
+import inet.projects.generic_tools.global_module.GlobalModule;
 network OsgEarthNet
 {
 	parameters:
@@ -50,3 +51,6 @@ network OsgEarthNet
 				addStaticRoutes = false;
 				addDefaultRoutes = false;
 		}
+		globalModule: GlobalModule {
+
+        }

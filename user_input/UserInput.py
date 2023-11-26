@@ -80,7 +80,7 @@ class UserInput:
         self.logger.info("Generating constellation...")
         constellation = Constellation.Constellation(orbitNumber, satPerOrbit, inclination,
                                                     startingPhase, altitude, linkBandWidth,
-                                                    routingProtocol, self.lipsin_apps, constellationType)
+                                                    routingProtocol, self.lipsin_apps, constellationType, checkPolarEntering)
         # create project
         return Project.Project(projectName, constellation)
 

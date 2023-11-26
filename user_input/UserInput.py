@@ -64,6 +64,8 @@ class UserInput:
         """
         # get project name
         projectName = self.answersForProject["project_name"]
+        # get if check polar entering
+        checkPolarEntering = self.answersForProject["check_polar_entering"]
         # get the type of the constellation
         constellationType = self.answersForConstellation["constellation_type"]
         # get constellation parameters

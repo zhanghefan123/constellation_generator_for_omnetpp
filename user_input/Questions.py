@@ -6,6 +6,14 @@ PROJECT_QUESTION = [
         "name": "project_name",
         "message": "What is the name of your project?",
         "default": "constellation"
+    }, {
+        "type": "list",
+        "name": "check_polar_entering",
+        "message": "Do you want to check polar entering?",
+        "choices": [
+            "Yes",
+            "No"
+        ]
     }
 ]
 

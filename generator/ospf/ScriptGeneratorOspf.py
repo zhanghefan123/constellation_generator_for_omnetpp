@@ -45,11 +45,8 @@ class ScriptGeneratorOspf(ScriptGeneratorBase.ScriptGeneratorBase):
         # preload file
         with open("resources/ospf/ini_pre_file") as f:
             final_str += f.read()
-        # check polar entering or not
-        if self.project.constellation.checkPolarEntering == "Yes":
-            final_str += "OsgEarthNet.channelController.checkPolarEnter = true\n"
-        else:
-            final_str += "OsgEarthNet.channelController.checkPolarEnter = false\n"
+        # generate whether to check polar entering
+        final_str += self.checkPolarAreaEntering()
         # generate satellites position
         for satellite in self.project.constellation.satellites:
             # noinspection

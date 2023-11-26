@@ -58,6 +58,8 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
         # preload file
         with open("resources/lipsin/ini_pre_file") as f:
             final_str += f.read()
+        # generate whether to check polar entering
+        final_str += self.checkPolarAreaEntering()
         # generate satellites position
         for satellite in self.project.constellation.satellites:
             # noinspection

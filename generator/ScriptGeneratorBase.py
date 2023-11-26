@@ -17,6 +17,13 @@ class ScriptGeneratorBase:
     def generateAll(self):
         raise NotImplementedError
 
+    def checkPolarAreaEntering(self) -> str:
+        # check polar entering or not
+        if self.project.constellation.checkPolarEntering == "Yes":
+            return "OsgEarthNet.channelController.checkPolarEnter = true\n"
+        else:
+            return "OsgEarthNet.channelController.checkPolarEnter = false\n"
+
     # noinspection PyMethodMayBeStatic
     def generateAddressXml(self) -> Tuple[str, str]:
         writeFilePath = f"{GlobalVars.MULTILAYER_SATELLITES_PATH}/projects/{self.project.projectName}/address.xml"

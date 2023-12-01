@@ -71,3 +71,12 @@ class ScriptGeneratorBase:
         # if the file doesn't exist create and write
         with open(file_path, "w") as writer:
             writer.write(content)
+
+    def generateSatelliteNumberIniPar(self) -> str:
+        """
+        generate satellite number ini par
+        :return:
+        """
+        numberOfSatellites = len(self.project.constellation.satellites)
+        result = "**.satelliteNum=" + str(numberOfSatellites)
+        return result

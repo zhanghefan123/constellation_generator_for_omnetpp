@@ -45,6 +45,8 @@ class ScriptGeneratorOspf(ScriptGeneratorBase.ScriptGeneratorBase):
         # preload file
         with open("resources/ospf/ini_pre_file") as f:
             final_str += f.read()
+        # generate satellite number config
+        final_str += self.generateSatelliteNumberIniPar()
         # generate whether to check polar entering
         final_str += self.checkPolarAreaEntering()
         # generate satellites position

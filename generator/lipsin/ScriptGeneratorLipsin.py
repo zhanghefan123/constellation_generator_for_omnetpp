@@ -32,7 +32,7 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\t\tgates:\n\r"
             final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.extraGslInterfaceCount}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
-        final_str += "\t connections allowunconneted:\n\r"
+        final_str += "\t connections allowunconnected:\n\r"
         # add connections
         for interSatelliteLink in self.project.constellation.ISLs:
             final_str += (f"\t\tSAT{interSatelliteLink.sourceSatellite.satellite_id}"

@@ -19,7 +19,10 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
         with open("resources/lipsin/ned_pre_file") as reader:
             final_str += reader.read()
         # write the LipsinGlobalRecorder
+        final_str += self.generateChannelControllerNed()
         final_str += f"\t\tlipsinGlobalRecorder: LipsinGlobalRecorder" + "{\n\r"
+        final_str += f"\t\t\tparameters:\n\r"
+        final_str += f"\t\t\t\t{self.generateSatelliteNumberNedPar()}"
         final_str += "\t\t}\n\r"
         # add satellite modules
         for satellite in self.project.constellation.satellites:
@@ -58,8 +61,8 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
         # preload file
         with open("resources/lipsin/ini_pre_file") as f:
             final_str += f.read()
-        # generate satellite number config
-        final_str += self.generateSatelliteNumberIniPar()
+        # generate simtime
+        self.generateSimTimeIni()
         # generate whether to check polar entering
         final_str += self.checkPolarAreaEntering()
         # generate satellites position

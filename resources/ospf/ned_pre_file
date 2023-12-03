@@ -41,10 +41,6 @@ network OsgEarthNet
 	submodules:
 		osgEarthScene: OsgEarthScene {
 		}
-		channelController: ChannelController {
-			parameters:
-				config = xmldoc("./channel.xml");
-		}
 		configurator: Ipv4NetworkConfigurator {
 			parameters:
 				config = xmldoc("./address.xml");

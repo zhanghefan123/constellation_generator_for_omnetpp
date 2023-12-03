@@ -17,6 +17,7 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
         # preload file
         with open("resources/none/ned_pre_file") as reader:
             final_str += reader.read()
+        final_str += self.generateChannelControllerNed()
         # add satellite modules
         for satellite in self.project.constellation.satellites:
             final_str += f"\t\tSAT{satellite.satellite_id}: {GlobalVars.NONE_SATELLITE_MODULE_NAME}" + "{\n\r"
@@ -46,6 +47,8 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
         # preload file
         with open("resources/none/ini_pre_file") as f:
             final_str += f.read()
+        # generate simulation time
+        final_str += self.generateSimTimeIni()
         # generate whether to check polar entering
         final_str += self.checkPolarAreaEntering()
         # generate satellites position

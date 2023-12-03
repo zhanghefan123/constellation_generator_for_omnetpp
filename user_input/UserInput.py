@@ -66,6 +66,8 @@ class UserInput:
         projectName = self.answersForProject["project_name"]
         # get if check polar entering
         checkPolarEntering = self.answersForProject["check_polar_entering"]
+        # get simulation time
+        simTime = int(self.answersForProject["sim_time"])
         # get the type of the constellation
         constellationType = self.answersForConstellation["constellation_type"]
         # get extraGslInterface count
@@ -83,7 +85,7 @@ class UserInput:
         constellation = Constellation.Constellation(orbitNumber, satPerOrbit, inclination,
                                                     startingPhase, altitude, linkBandWidth,
                                                     routingProtocol, self.lipsin_apps, constellationType,
-                                                    checkPolarEntering, extraGslInterfaceCount)
+                                                    checkPolarEntering, extraGslInterfaceCount, simTime)
         # create project
         return Project.Project(projectName, constellation)
 

@@ -72,11 +72,33 @@ class ScriptGeneratorBase:
         with open(file_path, "w") as writer:
             writer.write(content)
 
-    def generateSatelliteNumberIniPar(self) -> str:
+    def generateSatelliteNumberNedPar(self) -> str:
         """
         generate satellite number ini par
         :return:
         """
         numberOfSatellites = len(self.project.constellation.satellites)
-        result = "**.satelliteNum=" + str(numberOfSatellites)
+        result = "satelliteNum=" + str(numberOfSatellites)
+        return result
+
+    def generateChannelControllerNed(self) -> str:
+        """
+        generate channel controller ned
+        :return:
+        """
+        result = ""
+        result += f"\t\tchannelController: ChannelController" + "{\n\r"
+        result += f"\t\t\tparameters:\n\r"
+        result += f"\t\t\t\tconfig=xmldoc(\"./channel.xml\")\n\r"
+        result += f"\t\t\t\t{self.generateSatelliteNumberNedPar()}"
+        result += "\t\t}\n\r"
+        return result
+
+    def generateSimTimeIni(self) -> str:
+        """
+        generate simtime ini par
+        :return:
+        """
+        simTime = self.project.simTime
+        result = "sim-time-limit=" + str(simTime) + "s"
         return result

@@ -14,6 +14,12 @@ PROJECT_QUESTION = [
             "Yes",
             "No"
         ]
+    }, {
+        "type": "input",
+        "name": "sim_time",
+        "message": "What is the simulation time?",
+        "default": "100",
+        "validate": Validator.IntegerValidator
     }
 ]
 

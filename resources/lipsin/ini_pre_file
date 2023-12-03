@@ -9,7 +9,7 @@ simtime-resolution = ms
 *.GND*.mobility.typename = "GroundNodeMobility"
 *.GND*.mobility.modelURL = "dishlow.osgb"
 *.GND*.mobility.labelColor = "#00ffffff"
-*.GND*.modelScale = 50000
+*.GND*.mobility.modelScale = 50000
 
 # set channel controller params
 **.ChannelControllerModule = "channelController"

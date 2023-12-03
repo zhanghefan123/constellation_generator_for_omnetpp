@@ -77,7 +77,7 @@ class ScriptGeneratorBase:
         :return: the gsl type
         """
         gslType = self.project.constellation.gslLinkBandWidth
-        result = "gslType=" + str(gslType)
+        result = f"gslType=\"{str(gslType)}\""
         return result
 
     def generateSatelliteNumberNedPar(self) -> str:

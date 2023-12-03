@@ -185,14 +185,14 @@ GROUND_STATION_QUESTION = [
         "type": "input",
         "name": "ground_station_latitude",
         "message": "What is the latitude of the ground station?",
-        "default": "110.200",
+        "default": "36.560",
         "validate": Validator.FloatValidator
     },
     {
         "type": "input",
         "name": "ground_station_longitude",
         "message": "What is the longitude of the ground station?",
-        "default": "36.560",
+        "default": "110.200",
         "validate": Validator.FloatValidator
     },
     {

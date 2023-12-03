@@ -185,7 +185,7 @@ GROUND_STATION_QUESTION = [
     {
         "type": "list",
         "name": "continue",
-        "message": "Do you want to add more destination satellites?",
+        "message": "Do you want to add more ground stations?",
         "choices": [
             "Yes",
             "No"

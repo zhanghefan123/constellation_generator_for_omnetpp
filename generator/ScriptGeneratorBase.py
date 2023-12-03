@@ -100,5 +100,5 @@ class ScriptGeneratorBase:
         :return:
         """
         simTime = self.project.constellation.simTime
-        result = "sim-time-limit=" + str(simTime) + "s"
+        result = "sim-time-limit=" + str(simTime) + "s" + "\n"
         return result

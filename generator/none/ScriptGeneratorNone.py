@@ -25,6 +25,8 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\t\tgates:\n\r"
             final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.satelliteGslInterfaceCount}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
+        # generate ground stations
+        final_str += self.generateGroundStationNed()
         final_str += "\t connections allowunconnected:\n\r"
         # add connections
         for interSatelliteLink in self.project.constellation.ISLs:
@@ -55,6 +57,7 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"""*.SAT{satellite.satellite_id}.mobility.orbitNormal = \"{satellite.orbitNorms[0]}, {satellite.orbitNorms[1]}, {satellite.orbitNorms[2]}\"\n"""
             final_str += f"*.SAT{satellite.satellite_id}.mobility.startingPhase = {satellite.startingPhase}deg\n"
             final_str += f"*.SAT{satellite.satellite_id}.mobility.altitude = {satellite.altitude}km\n"
+        final_str += self.generateGroundStationIni()
         return writeFilePath, final_str
 
     def generateAll(self):

@@ -120,7 +120,7 @@ class ScriptGeneratorBase:
         """
         result = ""
         for index, ground_station in enumerate(self.project.constellation.groundStations):
-            result += f"\t\tGND{index}: GroundStation" + "{\n\r"
+            result += f"\t\tGND{index}: GroundCommNode" + "{\n\r"
             result += "\t\t}\n\r"
         return result
 

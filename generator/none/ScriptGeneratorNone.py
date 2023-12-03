@@ -23,7 +23,7 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\tSAT{satellite.satellite_id}: {GlobalVars.NONE_SATELLITE_MODULE_NAME}" + "{\n\r"
             final_str += f"\t\t\tparameters:\n\r"
             final_str += f"\t\t\tgates:\n\r"
-            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex}];\n\r"
+            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.satelliteGslInterfaceCount}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
         final_str += "\t connections allowunconnected:\n\r"
         # add connections

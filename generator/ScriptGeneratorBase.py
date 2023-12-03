@@ -81,6 +81,15 @@ class ScriptGeneratorBase:
         result = "satelliteNum=" + str(numberOfSatellites)
         return result
 
+    def generateGroundStationNumberNedPar(self) -> str:
+        """
+        generate ground station number ini par
+        :return:
+        """
+        numberOfGroundStations = len(self.project.constellation.groundStations)
+        result = "groundStationNum=" + str(numberOfGroundStations)
+        return result
+
     def generateChannelControllerNed(self) -> str:
         """
         generate channel controller ned
@@ -91,6 +100,7 @@ class ScriptGeneratorBase:
         result += f"\t\t\tparameters:\n\r"
         result += f"\t\t\t\tconfig=xmldoc(\"./channel.xml\");\n\r"
         result += f"\t\t\t\t{self.generateSatelliteNumberNedPar()};\n\r"
+        result += f"\t\t\t\t{self.generateGroundStationNumberNedPar()};\n\r"
         result += "\t\t}\n\r"
         return result
 
@@ -101,4 +111,28 @@ class ScriptGeneratorBase:
         """
         simTime = self.project.constellation.simTime
         result = "sim-time-limit=" + str(simTime) + "s" + "\n"
+        return result
+
+    def generateGroundStationNed(self) -> str:
+        """
+        generate ground station ned
+        :return: the ned content
+        """
+        result = ""
+        for index, ground_station in enumerate(self.project.constellation.groundStations):
+            result += f"\t\tGND{index}: GroundStation" + "{\n\r"
+            result += "\t\t}\n\r"
+        return result
+
+    def generateGroundStationIni(self) -> str:
+        """
+        generate ground station ini
+        :return: the ini content
+        """
+        result = ""
+        for index, ground_station in enumerate(self.project.constellation.groundStations):
+            result += f"*.GND{index}.mobility.label = \"{ground_station.name}\"\n"
+            result += f"*.GND{index}.mobility.longitude = {ground_station.longitude}\n"
+            result += f"*.GND{index}.mobility.latitude = {ground_station.latitude}\n"
+            result += f"*.GND{index}.mobility.altitude = 0km\n"
         return result

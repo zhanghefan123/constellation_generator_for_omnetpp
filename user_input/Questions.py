@@ -93,6 +93,13 @@ CONSTELLATION_QUESTION = [
         "message": "What is the altitude of your constellation? (km)",
         "default": "550",
         "validate": Validator.FloatValidator
+    },
+    {
+        "type": "input",
+        "name": "satellite_gsl_interface_num",
+        "message": "What is the number of the gsl interface of the satellite?",
+        "default": "1",
+        "validate": Validator.IntegerValidator
     }
 ]
 
@@ -139,5 +146,49 @@ LINK_CAPACITY_SETTING_QUESTION = [
         "message": "what is the packet capacity of the ethernet interface",
         "default": "500",
         "validate": Validator.IntegerValidator
+    }
+]
+
+IF_ADD_GROUND_STATION_QUESTION = [
+    {
+        "type": "list",
+        "name": "add_ground_station",
+        "message": "Do you want to add ground stations?",
+        "choices": [
+            "Yes",
+            "No"
+        ]
+    }
+]
+
+GROUND_STATION_QUESTION = [
+    {
+        "type": "input",
+        "name": "ground_station_name",
+        "message": "What is the name of the ground station?",
+        "default": "GND"
+    },
+    {
+        "type": "input",
+        "name": "ground_station_latitude",
+        "message": "What is the latitude of the ground station?",
+        "default": "110.200",
+        "validate": Validator.FloatValidator
+    },
+    {
+        "type": "input",
+        "name": "ground_station_longitude",
+        "message": "What is the longitude of the ground station?",
+        "default": "36.560",
+        "validate": Validator.FloatValidator
+    },
+    {
+        "type": "list",
+        "name": "continue",
+        "message": "Do you want to add more destination satellites?",
+        "choices": [
+            "Yes",
+            "No"
+        ]
     }
 ]

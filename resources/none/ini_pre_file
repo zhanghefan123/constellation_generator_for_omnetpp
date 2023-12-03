@@ -5,6 +5,12 @@ simtime-resolution = ms
 *.SAT*.mobility.modelURL = "satellite.osgb"
 *.SAT*.mobility.labelColor = "#ffff00ff"
 
+# set ground station mobility params
+*.GND*.mobility.typename = "GroundNodeMobility"
+*.GND*.mobility.modelURL = "dishlow.osgb"
+*.GND*.mobility.labelColor = "#00ffffff"
+*.GND*.modelScale = 50000
+
 # set channel controller params
 **.ChannelControllerModule = "channelController"
 

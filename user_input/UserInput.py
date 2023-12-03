@@ -5,6 +5,7 @@ from user_input import Questions
 from modules import Constellation
 from modules import Project
 from modules import InterSatelliteLink
+from modules import GroundStation
 from generator import ScriptGeneratorFactory
 from applications import LipsinApp
 
@@ -24,6 +25,10 @@ class UserInput:
         self.answersForLipsinApp = None
         self.lipsin_apps = []
 
+        self.answersForAddingGroundStations = None
+        self.answersForGroundStation = None
+        self.ground_stations = []
+
     def get_user_input(self) -> None:
         """
         get user input
@@ -34,6 +39,28 @@ class UserInput:
         self.answersForInterSatelliteLinks = PyInquirer.prompt(questions=Questions.LINK_QUESTION)
         self.answersForRoutingProtocols = PyInquirer.prompt(questions=Questions.ROUTING_PROTOCOL_QUESTION)
         self.get_lipsin_apps()
+        self.get_ground_stations()
+
+    def get_ground_stations(self):
+        """
+        get ground stations
+        :return:
+        """
+        self.answersForAddingGroundStations = PyInquirer.prompt(questions=Questions.IF_ADD_GROUND_STATION_QUESTION)
+        if self.answersForAddingGroundStations["add_ground_station"] == "Yes":
+            while True:
+                self.answersForGroundStation = PyInquirer.prompt(questions=Questions.GROUND_STATION_QUESTION)
+                ground_station_name = self.answersForGroundStation["ground_station_name"]
+                ground_station_latitude = float(self.answersForGroundStation["ground_station_latitude"])
+                ground_station_longitude = float(self.answersForGroundStation["ground_station_longitude"])
+                ground_station = GroundStation.GroundStation(ground_station_name,
+                                                             ground_station_latitude,
+                                                             ground_station_longitude)
+                self.ground_stations.append(ground_station)
+                if self.answersForGroundStation["continue"] == "Yes":
+                    continue
+                else:
+                    break
 
     def get_lipsin_apps(self):
         """
@@ -76,6 +103,7 @@ class UserInput:
         inclination = float(self.answersForConstellation["inclination"])
         startingPhase = float(self.answersForConstellation["starting_phase"])
         altitude = float(self.answersForConstellation["altitude"])
+        satelliteGslInterfaceCount = int(self.answersForConstellation["satellite_gsl_interface_num"])
         linkBandWidth = InterSatelliteLink.convert_str_to_bandwidth(self.answersForInterSatelliteLinks["bandwidth"])
         routingProtocol = Constellation.convert_str_to_routing_protocol(self.answersForRoutingProtocols["protocol"])
         # generate constellation
@@ -83,7 +111,7 @@ class UserInput:
         constellation = Constellation.Constellation(orbitNumber, satPerOrbit, inclination,
                                                     startingPhase, altitude, linkBandWidth,
                                                     routingProtocol, self.lipsin_apps, constellationType,
-                                                    checkPolarEntering, simTime)
+                                                    checkPolarEntering, simTime, self.ground_stations, satelliteGslInterfaceCount)
         # create project
         return Project.Project(projectName, constellation)
 

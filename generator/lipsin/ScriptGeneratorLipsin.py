@@ -33,7 +33,7 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
                 append_x = 50
             final_str += f'''\t\t\t\t@display("p={100 + 150*satellite.orbit_id + append_x},{100 + 100*satellite.index_in_orbit}");\n\r'''
             final_str += f"\t\t\tgates:\n\r"
-            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex}];\n\r"
+            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.satelliteGslInterfaceCount}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
         final_str += "\t connections allowunconnected:\n\r"
         # add connections

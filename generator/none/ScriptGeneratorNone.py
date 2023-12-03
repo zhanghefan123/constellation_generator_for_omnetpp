@@ -22,9 +22,9 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\tSAT{satellite.satellite_id}: {GlobalVars.NONE_SATELLITE_MODULE_NAME}" + "{\n\r"
             final_str += f"\t\t\tparameters:\n\r"
             final_str += f"\t\t\tgates:\n\r"
-            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex}];\n\r"
+            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.extraGslInterfaceCount}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
-        final_str += "\t connections:\n\r"
+        final_str += "\t connections allowunconneted:\n\r"
         # add connections
         for interSatelliteLink in self.project.constellation.ISLs:
             final_str += (f"\t\tSAT{interSatelliteLink.sourceSatellite.satellite_id}"

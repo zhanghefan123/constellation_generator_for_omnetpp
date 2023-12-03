@@ -87,6 +87,13 @@ CONSTELLATION_QUESTION = [
         "message": "What is the altitude of your constellation? (km)",
         "default": "550",
         "validate": Validator.FloatValidator
+    },
+    {
+        "type": "input",
+        "name": "extraGslInterface",
+        "message": "What is the count of extra number of GSL interfaces?",
+        "default": "0",
+        "validate": Validator.IntegerValidator
     }
 ]
 

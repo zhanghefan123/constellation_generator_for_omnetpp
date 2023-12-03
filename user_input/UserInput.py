@@ -68,6 +68,8 @@ class UserInput:
         checkPolarEntering = self.answersForProject["check_polar_entering"]
         # get the type of the constellation
         constellationType = self.answersForConstellation["constellation_type"]
+        # get extraGslInterface count
+        extraGslInterfaceCount = int(self.answersForConstellation["extraGslInterface"])
         # get constellation parameters
         orbitNumber = int(self.answersForConstellation["orbit_number"])
         satPerOrbit = int(self.answersForConstellation["sat_per_orbit"])
@@ -80,7 +82,8 @@ class UserInput:
         self.logger.info("Generating constellation...")
         constellation = Constellation.Constellation(orbitNumber, satPerOrbit, inclination,
                                                     startingPhase, altitude, linkBandWidth,
-                                                    routingProtocol, self.lipsin_apps, constellationType, checkPolarEntering)
+                                                    routingProtocol, self.lipsin_apps, constellationType,
+                                                    checkPolarEntering, extraGslInterfaceCount)
         # create project
         return Project.Project(projectName, constellation)
 

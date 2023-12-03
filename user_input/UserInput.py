@@ -109,7 +109,7 @@ class UserInput:
         altitude = float(self.answersForConstellation["altitude"])
         satelliteGslInterfaceCount = int(self.answersForConstellation["satellite_gsl_interface_num"])
         islLinkBandWidth = InterSatelliteLink.convert_str_to_bandwidth(self.answersForInterSatelliteLinks["bandwidth"])
-        gslLinkBandWidth = GslLink.convert_str_to_bandwidth(self.answersForGslLinks["bandwidth"])
+        gslLinkBandWidth = GslLink.convert_str_to_bandwidth(self.answersForGslLinks["gsl_band_width"])
         routingProtocol = Constellation.convert_str_to_routing_protocol(self.answersForRoutingProtocols["protocol"])
         # generate constellation
         self.logger.info("Generating constellation...")

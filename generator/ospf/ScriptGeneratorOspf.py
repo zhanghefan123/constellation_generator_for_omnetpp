@@ -24,7 +24,7 @@ class ScriptGeneratorOspf(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\t\tparameters:\n\r"
             final_str += f"\t\t\t\thasOspf = true;\n\r"
             final_str += f"\t\t\tgates:\n\r"
-            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.extraGslInterfaceCount}];\n\r"
+            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
         final_str += "\t connections allowunconnected:\n\r"
         # add connections

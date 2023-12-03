@@ -27,7 +27,7 @@ class Constellation:
             return str(self.name)
 
     def __init__(self, orbitNumber, satPerOrbit, inclination,
-                 startingPhase, altitude, linkBandWidth,
+                 startingPhase, altitude, isl_link_bandwidth, gsl_link_bandwidth,
                  routingProtocol, lipsin_apps, constellation_type,
                  check_polar_entering, sim_time, ground_stations, satellite_gsl_interface_count):
         """
@@ -37,7 +37,8 @@ class Constellation:
         :param inclination:  inclination
         :param startingPhase:  starting phase
         :param altitude:  altitude
-        :param linkBandWidth:  bandwidth of inter satellite link
+        :param isl_link_bandwidth:  bandwidth of inter satellite link
+        :param gsl_link_bandwidth:  bandwidth of ground satellite link
         :param routingProtocol:  the routing protocol on satellite
         :param constellation_type: the type of the constellation
         :param check_polar_entering: whether to check polar entering
@@ -50,7 +51,8 @@ class Constellation:
         self.inclination = inclination
         self.startingPhase = startingPhase
         self.altitude = altitude
-        self.linkBandWidth = linkBandWidth
+        self.islLinkBandWidth = isl_link_bandwidth
+        self.gslLinkBandWidth = gsl_link_bandwidth
         self.routingProtocol = routingProtocol
         self.lipsin_apps = lipsin_apps
         self.constellationType = constellation_type
@@ -132,7 +134,7 @@ class Constellation:
                                                                 self.satellites[sourceIndex].interfaceIndex,
                                                                 self.satellites[destIndex],
                                                                 self.satellites[destIndex].interfaceIndex,
-                                                                self.linkBandWidth,
+                                                                self.islLinkBandWidth,
                                                                 InterSatelliteLink.InterSatelliteLink.LinkType.INTRA_ORBIT)
                 self.satellites[sourceIndex].interfaceIndex += 1
                 self.satellites[destIndex].interfaceIndex += 1
@@ -147,7 +149,7 @@ class Constellation:
                                                                     self.satellites[sourceIndex].interfaceIndex,
                                                                     self.satellites[destIndex],
                                                                     self.satellites[destIndex].interfaceIndex,
-                                                                    self.linkBandWidth,
+                                                                    self.islLinkBandWidth,
                                                                     InterSatelliteLink.InterSatelliteLink.LinkType.
                                                                     INTER_ORBIT)
                     self.satellites[sourceIndex].interfaceIndex += 1
@@ -168,7 +170,7 @@ class Constellation:
                                                                 self.satellites[sourceIndex].interfaceIndex,
                                                                 self.satellites[destIndex],
                                                                 self.satellites[destIndex].interfaceIndex,
-                                                                self.linkBandWidth,
+                                                                self.islLinkBandWidth,
                                                                 InterSatelliteLink.InterSatelliteLink.LinkType.INTRA_ORBIT)
                 self.satellites[sourceIndex].interfaceIndex += 1
                 self.satellites[destIndex].interfaceIndex += 1
@@ -184,7 +186,7 @@ class Constellation:
                                                                     self.satellites[sourceIndex].interfaceIndex,
                                                                     self.satellites[destIndex],
                                                                     self.satellites[destIndex].interfaceIndex,
-                                                                    self.linkBandWidth,
+                                                                    self.islLinkBandWidth,
                                                                     InterSatelliteLink.InterSatelliteLink.LinkType.
                                                                     INTER_ORBIT)
                     self.satellites[sourceIndex].interfaceIndex += 1
@@ -199,7 +201,7 @@ class Constellation:
                                                                 self.satellites[sourceIndex].interfaceIndex,
                                                                 self.satellites[destIndex],
                                                                 self.satellites[destIndex].interfaceIndex,
-                                                                self.linkBandWidth,
+                                                                self.islLinkBandWidth,
                                                                 InterSatelliteLink.InterSatelliteLink.LinkType.
                                                                 INTER_ORBIT)
                 self.satellites[sourceIndex].interfaceIndex += 1

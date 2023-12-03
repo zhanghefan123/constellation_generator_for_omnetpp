@@ -40,8 +40,7 @@ class ScriptGeneratorBase:
                           f"src-gate='ethg[{interSatelliteLink.sourceInterfaceIndex}]' "
                           f"dest-module='SAT{interSatelliteLink.destinationSatellite.satellite_id}' "
                           f"dest-gate='ethg[{interSatelliteLink.destInterfaceIndex}]' "
-                          f"channel-type='projects.{self.project.projectName}."
-                          f"OsgEarthNet.{self.project.constellation.linkBandWidth}' "
+                          f"channel-type='nedFiles.channels.{interSatelliteLink.bandWidth}'"
                           f"link-info='{interSatelliteLink.linkType}'"
                           f"/>\n\r")
         final_str += "</config>\n\r"
@@ -72,6 +71,15 @@ class ScriptGeneratorBase:
         with open(file_path, "w") as writer:
             writer.write(content)
 
+    def generateGslType(self) -> str:
+        """
+        generate gsl type
+        :return: the gsl type
+        """
+        gslType = self.project.constellation.gslLinkBandWidth
+        result = "gslType=" + str(gslType)
+        return result
+
     def generateSatelliteNumberNedPar(self) -> str:
         """
         generate satellite number ini par
@@ -99,6 +107,7 @@ class ScriptGeneratorBase:
         result += f"\t\tchannelController: ChannelController" + "{\n\r"
         result += f"\t\t\tparameters:\n\r"
         result += f"\t\t\t\tconfig=xmldoc(\"./channel.xml\");\n\r"
+        result += f"\t\t\t\t{self.generateGslType()};\n\r"
         result += f"\t\t\t\t{self.generateSatelliteNumberNedPar()};\n\r"
         result += f"\t\t\t\t{self.generateGroundStationNumberNedPar()};\n\r"
         result += "\t\t}\n\r"

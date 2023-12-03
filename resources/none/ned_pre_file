@@ -3,7 +3,13 @@ import nedFiles.osgNodes.GroundCommNode;
 import nedFiles.osgNodes.OsgEarthScene;
 import nedFiles.osgNodes.SatComm;
 import nedFiles.channels.SatToSat;
+import nedFiles.channels.SatToSat_10Mbps;
+import nedFiles.channels.SatToSat_100Mbps;
+import nedFiles.channels.SatToSat_1Gbps;
 import nedFiles.channels.SatToGround;
+import nedFiles.channels.SatToGround_10Mbps;
+import nedFiles.channels.SatToGround_100Mbps;
+import nedFiles.channels.SatToGround_1Gbps;
 import inet.common.scenario.ScenarioManager;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
 import nedFiles.osgNodes.SatHost;
@@ -13,31 +19,6 @@ network OsgEarthNet
 	parameters:
 		int rngNum = default(0);
 		double sendInterval = default(1);
-	types:
-		channel SatToSat_10Mbps extends SatToSat
-		{
-			datarate=10Mbps;
-		}
-		channel SatToSat_100Mbps extends SatToSat
-		{
-			datarate=100Mbps;
-		}
-		channel SatToSat_1Gbps extends SatToSat
-		{
-			datarate=1Gbps;
-		}
-		channel SatToGround_10Mbps extends SatToGround
-		{
-			datarate=10Mbps;
-		}
-		channel SatToGround_100Mbps extends SatToGround
-		{
-			datarate=100Mbps;
-		}
-		channel SatToGround_1Gbps extends SatToGround
-		{
-			datarate=1Gbps;
-		}
 	submodules:
 		osgEarthScene: OsgEarthScene {
 		}

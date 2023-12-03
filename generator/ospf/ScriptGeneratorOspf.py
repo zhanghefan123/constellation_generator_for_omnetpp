@@ -34,7 +34,7 @@ class ScriptGeneratorOspf(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += (f"\t\tSAT{interSatelliteLink.sourceSatellite.satellite_id}"
                           f".ethg[{interSatelliteLink.sourceInterfaceIndex}]"
                           f" <--> "
-                          f"{self.project.constellation.linkBandWidth}"
+                          f"{self.project.constellation.islLinkBandWidth}"
                           f" <--> "
                           f"SAT{interSatelliteLink.destinationSatellite.satellite_id}"
                           f".ethg[{interSatelliteLink.destInterfaceIndex}];\n\r")

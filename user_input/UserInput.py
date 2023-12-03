@@ -5,6 +5,7 @@ from user_input import Questions
 from modules import Constellation
 from modules import Project
 from modules import InterSatelliteLink
+from modules import GslLink
 from modules import GroundStation
 from generator import ScriptGeneratorFactory
 from applications import LipsinApp
@@ -28,6 +29,7 @@ class UserInput:
         self.answersForAddingGroundStations = None
         self.answersForGroundStation = None
         self.ground_stations = []
+        self.answersForGslLinks = None
 
     def get_user_input(self) -> None:
         """
@@ -36,7 +38,7 @@ class UserInput:
         """
         self.answersForProject = PyInquirer.prompt(questions=Questions.PROJECT_QUESTION)
         self.answersForConstellation = PyInquirer.prompt(questions=Questions.CONSTELLATION_QUESTION)
-        self.answersForInterSatelliteLinks = PyInquirer.prompt(questions=Questions.LINK_QUESTION)
+        self.answersForInterSatelliteLinks = PyInquirer.prompt(questions=Questions.ISL_LINK_QUESTION)
         self.answersForRoutingProtocols = PyInquirer.prompt(questions=Questions.ROUTING_PROTOCOL_QUESTION)
         self.get_lipsin_apps()
         self.get_ground_stations()
@@ -61,6 +63,8 @@ class UserInput:
                     continue
                 else:
                     break
+            # ask the gsl settings
+            self.answersForGslLinks = PyInquirer.prompt(questions=Questions.GSL_LINK_QUESTION)
 
     def get_lipsin_apps(self):
         """
@@ -104,12 +108,13 @@ class UserInput:
         startingPhase = float(self.answersForConstellation["starting_phase"])
         altitude = float(self.answersForConstellation["altitude"])
         satelliteGslInterfaceCount = int(self.answersForConstellation["satellite_gsl_interface_num"])
-        linkBandWidth = InterSatelliteLink.convert_str_to_bandwidth(self.answersForInterSatelliteLinks["bandwidth"])
+        islLinkBandWidth = InterSatelliteLink.convert_str_to_bandwidth(self.answersForInterSatelliteLinks["bandwidth"])
+        gslLinkBandWidth = GslLink.convert_str_to_bandwidth(self.answersForGslLinks["bandwidth"])
         routingProtocol = Constellation.convert_str_to_routing_protocol(self.answersForRoutingProtocols["protocol"])
         # generate constellation
         self.logger.info("Generating constellation...")
         constellation = Constellation.Constellation(orbitNumber, satPerOrbit, inclination,
-                                                    startingPhase, altitude, linkBandWidth,
+                                                    startingPhase, altitude, islLinkBandWidth, gslLinkBandWidth,
                                                     routingProtocol, self.lipsin_apps, constellationType,
                                                     checkPolarEntering, simTime, self.ground_stations, satelliteGslInterfaceCount)
         # create project

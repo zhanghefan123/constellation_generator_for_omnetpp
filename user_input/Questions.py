@@ -23,11 +23,24 @@ PROJECT_QUESTION = [
     }
 ]
 
-LINK_QUESTION = [
+ISL_LINK_QUESTION = [
     {
         "type": "list",
         "name": "bandwidth",
         "message": "What is the bandwidth of your inter satellite link?",
+        "choices": [
+            "10 Mbps",
+            "100 Mbps",
+            "1000 Mbps"
+        ]
+    }
+]
+
+GSL_LINK_QUESTION = [
+    {
+        "type": "list",
+        "name": "gsl_band_width",
+        "message": "what is the bandwidth of your GSL link?",
         "choices": [
             "10 Mbps",
             "100 Mbps",

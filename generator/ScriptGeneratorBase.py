@@ -40,7 +40,7 @@ class ScriptGeneratorBase:
                           f"src-gate='ethg[{interSatelliteLink.sourceInterfaceIndex}]' "
                           f"dest-module='SAT{interSatelliteLink.destinationSatellite.satellite_id}' "
                           f"dest-gate='ethg[{interSatelliteLink.destInterfaceIndex}]' "
-                          f"channel-type='nedFiles.channels.{interSatelliteLink.bandWidth}'"
+                          f"channel-type='nedFiles.channels.{interSatelliteLink.bandWidth}' "
                           f"link-info='{interSatelliteLink.linkType}'"
                           f"/>\n\r")
         final_str += "</config>\n\r"

@@ -28,8 +28,6 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
         for satellite in self.project.constellation.satellites:
             final_str += f"\t\tSAT{satellite.satellite_id}: {GlobalVars.LIPSIN_SATELLITE_MODULE_NAME}" + "{\n\r"
             final_str += f"\t\t\tparameters:\n\r"
-            final_str += f"\t\t\t\tislInterfaceCount = {satellite.interfaceCount};\n\r"
-            final_str += f"\t\t\t\tgslInterfaceCount = {self.project.constellation.extraGslInterfaceCount};\n\r"
             append_x = 0
             if satellite.index_in_orbit == 0 or (satellite.index_in_orbit == self.project.constellation.satPerOrbit - 1):
                 append_x = 50

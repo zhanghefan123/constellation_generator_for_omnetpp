@@ -29,7 +29,7 @@ class Constellation:
     def __init__(self, orbitNumber, satPerOrbit, inclination,
                  startingPhase, altitude, linkBandWidth,
                  routingProtocol, lipsin_apps, constellation_type,
-                 check_polar_entering, extra_gsl_interface_count, sim_time):
+                 check_polar_entering, sim_time):
         """
         initialize the constellation object
         :param orbitNumber:  number of orbits
@@ -41,7 +41,6 @@ class Constellation:
         :param routingProtocol:  the routing protocol on satellite
         :param constellation_type: the type of the constellation
         :param check_polar_entering: whether to check polar entering
-        :param extra_gsl_interface_count: extra gsl interface count
         :param sim_time: simulation time
         """
         self.orbitNumber = orbitNumber
@@ -54,7 +53,6 @@ class Constellation:
         self.lipsin_apps = lipsin_apps
         self.constellationType = constellation_type
         self.checkPolarEntering = check_polar_entering
-        self.extraGslInterfaceCount = extra_gsl_interface_count
         self.simTime = sim_time
 
         self.satellites = []  # all the satellites in the constellation

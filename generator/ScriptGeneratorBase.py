@@ -99,6 +99,6 @@ class ScriptGeneratorBase:
         generate simtime ini par
         :return:
         """
-        simTime = self.project.simTime
+        simTime = self.project.constellation.simTime
         result = "sim-time-limit=" + str(simTime) + "s"
         return result

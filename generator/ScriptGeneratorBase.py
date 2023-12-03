@@ -89,8 +89,8 @@ class ScriptGeneratorBase:
         result = ""
         result += f"\t\tchannelController: ChannelController" + "{\n\r"
         result += f"\t\t\tparameters:\n\r"
-        result += f"\t\t\t\tconfig=xmldoc(\"./channel.xml\")\n\r"
-        result += f"\t\t\t\t{self.generateSatelliteNumberNedPar()}"
+        result += f"\t\t\t\tconfig=xmldoc(\"./channel.xml\");\n\r"
+        result += f"\t\t\t\t{self.generateSatelliteNumberNedPar()};\n\r"
         result += "\t\t}\n\r"
         return result
 

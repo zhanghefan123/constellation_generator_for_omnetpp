@@ -1,0 +1,27 @@
+default:
+  # -------- project related questions --------
+  project_name: ospf_test
+  simulation_time: 100
+  check_polar_entering: false
+  # -------- project related questions --------
+  # -------- constellation related questions --------
+  constellation_type: walker_star
+  orbit_number: 4
+  sat_per_orbit: 11
+  inclination: 90
+  starting_phase: 0
+  altitude: 550
+  satellite_gsl_interface_number: 0
+  # -------- constellation related questions --------
+  # ---------- routing protocol questions ----------
+  routing_protocol: ip-ospf
+  # ---------- routing protocol questions ----------
+  # ---------- lipsin apps ----------
+  lipsin_apps:
+    -
+  # ---------- lipsin apps ----------
+  # ---------- ground stations ---------
+  ground_stations:
+    -
+  # ---------- ground stations ---------
+

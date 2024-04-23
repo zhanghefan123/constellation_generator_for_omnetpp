@@ -19,7 +19,7 @@ class ScriptGeneratorBase:
 
     def checkPolarAreaEntering(self) -> str:
         # check polar entering or not
-        if self.project.constellation.checkPolarEntering == "Yes":
+        if self.project.constellation.config_reader.check_polar_entering == "Yes":
             return "OsgEarthNet.channelController.checkPolarEnter = true\n"
         else:
             return "OsgEarthNet.channelController.checkPolarEnter = false\n"
@@ -76,7 +76,7 @@ class ScriptGeneratorBase:
         generate gsl type
         :return: the gsl type
         """
-        gslType = self.project.constellation.gslLinkBandWidth
+        gslType = self.project.constellation.config_reader.gsl_link_bandwidth
         result = f"gslType=\"nedFiles.channels.{str(gslType)}\""
         return result
 
@@ -94,7 +94,7 @@ class ScriptGeneratorBase:
         generate ground station number ini par
         :return:
         """
-        numberOfGroundStations = len(self.project.constellation.groundStations)
+        numberOfGroundStations = len(self.project.constellation.ground_stations)
         result = "groundStationNum=" + str(numberOfGroundStations)
         return result
 
@@ -118,7 +118,7 @@ class ScriptGeneratorBase:
         generate simtime ini par
         :return:
         """
-        simTime = self.project.constellation.simTime
+        simTime = self.project.constellation.config_reader.simulation_time
         result = "sim-time-limit=" + str(simTime) + "s" + "\n"
         return result
 
@@ -128,7 +128,7 @@ class ScriptGeneratorBase:
         :return: the ned content
         """
         result = ""
-        for index, ground_station in enumerate(self.project.constellation.groundStations):
+        for index, ground_station in enumerate(self.project.constellation.ground_stations):
             result += f"\t\tGND{index}: GroundCommNode" + "{\n\r"
             result += f"\t\t\tgates:\n\r"
             result += f"\t\t\t\tethg[1];\n\r"
@@ -141,7 +141,7 @@ class ScriptGeneratorBase:
         :return: the ini content
         """
         result = ""
-        for index, ground_station in enumerate(self.project.constellation.groundStations):
+        for index, ground_station in enumerate(self.project.constellation.ground_stations):
             result += f"*.GND{index}.mobility.label = \"{ground_station.name}\"\n"
             result += f"*.GND{index}.mobility.longitude = {ground_station.longitude}\n"
             result += f"*.GND{index}.mobility.latitude = {ground_station.latitude}\n"

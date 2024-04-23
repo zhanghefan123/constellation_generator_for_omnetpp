@@ -1,5 +1,8 @@
+from modules import Constellation as cm
+
+
 class Project:
-    def __init__(self, projectName, constellation):
+    def __init__(self, projectName: str, constellation: cm.Constellation):
         """
         initialize the project object
         :param projectName:  project name

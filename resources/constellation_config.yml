@@ -5,7 +5,7 @@ default:
   check_polar_entering: false
   # -------- project related questions --------
   # -------- constellation related questions --------
-  constellation_type: walker_star
+  constellation_type: WALKER_STAR
   orbit_number: 4
   sat_per_orbit: 11
   inclination: 90
@@ -13,15 +13,21 @@ default:
   altitude: 550
   satellite_gsl_interface_number: 0
   # -------- constellation related questions --------
+  # -------- link related questions --------
+  isl_link_bandwidth: 10 Mbps
+  gsl_link_bandwidth: 10 Mbps
+  # -------- link related questions --------
   # ---------- routing protocol questions ----------
-  routing_protocol: ip-ospf
+  routing_protocol: IP_OSPF
   # ---------- routing protocol questions ----------
   # ---------- lipsin apps ----------
   lipsin_apps:
-    -
+    - 1|2|3     # source|destination1|destination2.....
   # ---------- lipsin apps ----------
   # ---------- ground stations ---------
   ground_stations:
-    -
+    - gnd0|20|30  # name|longitude|latitude
+    - gnd1|30|40
+    - gnd2|30|40
   # ---------- ground stations ---------
 

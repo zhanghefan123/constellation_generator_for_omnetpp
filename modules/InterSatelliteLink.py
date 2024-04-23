@@ -1,22 +1,6 @@
 from enum import Enum
 
 
-def convert_str_to_bandwidth(bandwidth_str):
-    """
-    convert string to bandwidth
-    :param bandwidth_str:  string of bandwidth
-    :return:
-    """
-    if bandwidth_str == "10 Mbps":
-        return InterSatelliteLink.BandWidth.SatToSat_10Mbps
-    elif bandwidth_str == "100 Mbps":
-        return InterSatelliteLink.BandWidth.SatToSat_100Mbps
-    elif bandwidth_str == "1000 Mbps":
-        return InterSatelliteLink.BandWidth.SatToSat_1Gbps
-    else:
-        return None
-
-
 class InterSatelliteLink:
     class LinkType(Enum):
         """
@@ -30,6 +14,22 @@ class InterSatelliteLink:
                 return "intra-orbit"
             elif self.name == "INTER_ORBIT":
                 return "inter-orbit"
+
+    @classmethod
+    def convert_str_to_bandwidth(cls, bandwidth_str):
+        """
+        convert string to bandwidth
+        :param bandwidth_str:  string of bandwidth
+        :return:
+        """
+        if bandwidth_str == "10 Mbps":
+            return InterSatelliteLink.BandWidth.SatToSat_10Mbps
+        elif bandwidth_str == "100 Mbps":
+            return InterSatelliteLink.BandWidth.SatToSat_100Mbps
+        elif bandwidth_str == "1000 Mbps":
+            return InterSatelliteLink.BandWidth.SatToSat_1Gbps
+        else:
+            return None
 
     class BandWidth(Enum):
         """

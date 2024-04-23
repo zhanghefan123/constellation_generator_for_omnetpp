@@ -1,5 +1,5 @@
-from user_input import UserInput
+from user_input import UserInterface as uim
 
 if __name__ == "__main__":
-    user_interface = UserInput.UserInput()
+    user_interface = uim.UserInterface()
     user_interface.start()

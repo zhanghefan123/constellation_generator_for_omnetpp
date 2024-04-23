@@ -23,7 +23,7 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\tSAT{satellite.satellite_id}: {GlobalVars.NONE_SATELLITE_MODULE_NAME}" + "{\n\r"
             final_str += f"\t\t\tparameters:\n\r"
             final_str += f"\t\t\tgates:\n\r"
-            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.satelliteGslInterfaceCount}];\n\r"
+            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.config_reader.satellite_gsl_interface_number}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
         # generate ground stations
         final_str += self.generateGroundStationNed()
@@ -33,7 +33,7 @@ class ScriptGeneratorNone(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += (f"\t\tSAT{interSatelliteLink.sourceSatellite.satellite_id}"
                           f".ethg[{interSatelliteLink.sourceInterfaceIndex}]"
                           f" <--> "
-                          f"{self.project.constellation.islLinkBandWidth}"
+                          f"{self.project.constellation.config_reader.isl_link_bandwidth}"
                           f" <--> "
                           f"SAT{interSatelliteLink.destinationSatellite.satellite_id}"
                           f".ethg[{interSatelliteLink.destInterfaceIndex}];\n\r")

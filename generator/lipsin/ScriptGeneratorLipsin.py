@@ -29,11 +29,11 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += f"\t\tSAT{satellite.satellite_id}: {GlobalVars.LIPSIN_SATELLITE_MODULE_NAME}" + "{\n\r"
             final_str += f"\t\t\tparameters:\n\r"
             append_x = 0
-            if satellite.index_in_orbit == 0 or (satellite.index_in_orbit == self.project.constellation.satPerOrbit - 1):
+            if satellite.index_in_orbit == 0 or (satellite.index_in_orbit == self.project.constellation.config_reader.sat_per_orbit - 1):
                 append_x = 50
             final_str += f'''\t\t\t\t@display("p={100 + 150*satellite.orbit_id + append_x},{100 + 100*satellite.index_in_orbit}");\n\r'''
             final_str += f"\t\t\tgates:\n\r"
-            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.satelliteGslInterfaceCount}];\n\r"
+            final_str += f"\t\t\t\tethg[{satellite.interfaceIndex + self.project.constellation.config_reader.satellite_gsl_interface_number}];\n\r"
             final_str += f"\t\t" + "}" + "\n\r"
         final_str += "\t connections allowunconnected:\n\r"
         # add connections
@@ -41,7 +41,7 @@ class ScriptGeneratorLipsin(ScriptGeneratorBase.ScriptGeneratorBase):
             final_str += (f"\t\tSAT{interSatelliteLink.sourceSatellite.satellite_id}"
                           f".ethg[{interSatelliteLink.sourceInterfaceIndex}]"
                           f" <--> "
-                          f"{self.project.constellation.islLinkBandWidth}"
+                          f"{self.project.constellation.isl_link_bandwidth}"
                           f" <--> "
                           f"SAT{interSatelliteLink.destinationSatellite.satellite_id}"
                           f".ethg[{interSatelliteLink.destInterfaceIndex}];\n\r")

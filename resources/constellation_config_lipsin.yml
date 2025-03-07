@@ -29,7 +29,7 @@ default:
   # ---------- routing protocol questions ----------
   # ---------- lipsin apps ----------
   lipsin_apps:
-    -
+    - 1|5
 #    - 1|2|3     # source|destination1|destination2.....
   # ---------- lipsin apps ----------
   # ---------- ground stations ---------

@@ -85,12 +85,12 @@ class ConfigReader:
 
     def start(self):
         if __name__ == "__main__":
-            self.load(configuration_file_path="../resources/constellation_config_ospf.yml")
+            self.load(configuration_file_path="../resources/constellation_config_lipsin.yml")
         else:
             self.load()
         self.print_loaded_info()
 
-    def load(self, configuration_file_path: str = "./resources/constellation_config.yml",
+    def load(self, configuration_file_path: str = "./resources/constellation_config_lipsin.yml",
              selected_config: str = "default"):
         with open(file=configuration_file_path, mode='r', encoding="utf-8") as f:
             selected_config_data = yaml.load(stream=f, Loader=yaml.FullLoader).get(selected_config, None)

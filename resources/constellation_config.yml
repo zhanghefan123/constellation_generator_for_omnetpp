@@ -1,6 +1,6 @@
 default:
   # -------- project related questions --------
-  project_name: sr_tnse_test
+  project_name: iridium_test
   simulation_time: 100
   check_polar_entering: false
   # -------- project related questions --------

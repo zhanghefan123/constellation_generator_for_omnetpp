@@ -3,12 +3,15 @@ if __name__ == "__main__":
 
     sys.path.append("../")
 
+import os
 import yaml
 from modules import ModuleTypes as mtm
 from modules import GroundStation as gsm
 from applications import LipsinApp as lam
 from modules import GslLink as glm
 from modules import InterSatelliteLink as islm
+from user_input import questions as qm
+from PyInquirer import prompt
 
 
 class RequiredFields:
@@ -83,11 +86,28 @@ class ConfigReader:
         self.ground_stations = None
         # ---------- ground stations ----------
 
+    def find_available_configuration_ymls(self):
+        """
+        寻找可以使用的 yml 配置文件
+        :return: 可用的 yml 配置文件
+        """
+        available_configuration_ymls = []
+        resources_file_path = "./resources"
+        for file in os.listdir(resources_file_path):
+            if os.path.isdir(f"./resources/{file}"):
+                continue
+            else:
+                available_configuration_ymls.append(file)
+        return available_configuration_ymls
+
     def start(self):
-        if __name__ == "__main__":
-            self.load(configuration_file_path="../resources/constellation_config_lipsin.yml")
-        else:
-            self.load()
+        """
+        让用户选择配置跌启动函数
+        """
+        question = qm.QUESTION_FOR_CONFIGURATION_FILE
+        question[0]["choices"] = self.find_available_configuration_ymls()
+        user_selected_configuration_file = prompt(question)["configuration_file"]
+        self.load(configuration_file_path=f"./resources/{user_selected_configuration_file}")
         self.print_loaded_info()
 
     def load(self, configuration_file_path: str = "./resources/constellation_config_lipsin.yml",

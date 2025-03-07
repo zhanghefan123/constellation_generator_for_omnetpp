@@ -1,5 +1,6 @@
 if __name__ == "__main__":
     import sys
+
     sys.path.append("../")
 
 import yaml
@@ -8,6 +9,7 @@ from modules import GroundStation as gsm
 from applications import LipsinApp as lam
 from modules import GslLink as glm
 from modules import InterSatelliteLink as islm
+
 
 class RequiredFields:
     # -------------- project related fields --------------
@@ -19,10 +21,13 @@ class RequiredFields:
     constellation_type = "constellation_type"
     orbit_number = "orbit_number"
     sat_per_orbit = "sat_per_orbit"
+    area_orbit_count = "area_orbit_count"
+    area_sat_per_orbit = "area_sat_per_orbit"
     inclination = "inclination"
     starting_phase = "starting_phase"
     altitude = "altitude"
     satellite_gsl_interface_number = "satellite_gsl_interface_number"
+    start_to_fail = "start_to_fail"
     # -------------- constellation related fields --------------
     # -------------- link related fields --------------
     isl_link_bandwidth = "isl_link_bandwidth"
@@ -30,6 +35,10 @@ class RequiredFields:
     # -------------- link related fields -------------
     # -------------- routing protocol field --------------
     routing_protocol = "routing_protocol"
+    hello_interval = "hello_interval"
+    router_dead_interval = "router_dead_interval"
+    poll_interval = "poll_interval"
+    retransmission_interval = "retransmission_interval"
     # -------------- routing protocol field --------------
     # -------------- lipsin apps --------------
     lipsin_apps = "lipsin_apps"
@@ -48,10 +57,13 @@ class ConfigReader:
         self.constellation_type = None
         self.orbit_number = None
         self.sat_per_orbit = None
+        self.area_orbit_count = None
+        self.area_sat_per_orbit = None
         self.inclination = None
         self.starting_phase = None
         self.altitude = None
         self.satellite_gsl_interface_number = None
+        self.start_to_fail = None
         # ---------- constellation related questions ----------
         # ---------- link questions ----------
         self.isl_link_bandwidth = None
@@ -59,6 +71,10 @@ class ConfigReader:
         # ---------- link questions ----------
         # ---------- routing protocol questions ----------
         self.routing_protocol = None
+        self.hello_interval = None
+        self.router_dead_interval = None
+        self.poll_interval = None
+        self.retransmission_interval = None
         # ---------- routing protocol questions ----------
         # ---------- lipsin apps ----------
         self.lipsin_apps = None
@@ -69,7 +85,7 @@ class ConfigReader:
 
     def start(self):
         if __name__ == "__main__":
-            self.load(configuration_file_path="../resources/constellation_config.yml")
+            self.load(configuration_file_path="../resources/constellation_config_ospf.yml")
         else:
             self.load()
         self.print_loaded_info()
@@ -86,27 +102,40 @@ class ConfigReader:
                 # --- project related ---
                 # --- constellation related ---
                 self.constellation_type = selected_config_data.get(RequiredFields.constellation_type, None)
-                self.constellation_type = mtm.ConstellationType.convert_str_to_constellation_type(self.constellation_type)
+                self.constellation_type = mtm.ConstellationType.convert_str_to_constellation_type(
+                    self.constellation_type)
                 self.orbit_number = int(selected_config_data.get(RequiredFields.orbit_number, None))
                 self.sat_per_orbit = int(selected_config_data.get(RequiredFields.sat_per_orbit, None))
+                self.area_orbit_count = int(selected_config_data.get(RequiredFields.area_orbit_count, None))
+                self.area_sat_per_orbit = int(selected_config_data.get(RequiredFields.area_sat_per_orbit, None))
                 self.inclination = int(selected_config_data.get(RequiredFields.inclination, None))
                 self.starting_phase = int(selected_config_data.get(RequiredFields.starting_phase, None))
                 self.altitude = int(selected_config_data.get(RequiredFields.altitude, None))
-                self.satellite_gsl_interface_number = int(selected_config_data.get(RequiredFields.satellite_gsl_interface_number, None))
+                self.satellite_gsl_interface_number = int(
+                    selected_config_data.get(RequiredFields.satellite_gsl_interface_number, None))
+                self.start_to_fail = int(selected_config_data.get(RequiredFields.start_to_fail, None))
                 # --- constellation related ---
                 # --- link related ---
-                self.isl_link_bandwidth = ConfigReader.resolve_inter_satellite_link_type(selected_config_data.get(RequiredFields.isl_link_bandwidth))
-                self.gsl_link_bandwidth = ConfigReader.resolve_ground_satellite_link_type(selected_config_data.get(RequiredFields.gsl_link_bandwidth))
+                self.isl_link_bandwidth = ConfigReader.resolve_inter_satellite_link_type(
+                    selected_config_data.get(RequiredFields.isl_link_bandwidth))
+                self.gsl_link_bandwidth = ConfigReader.resolve_ground_satellite_link_type(
+                    selected_config_data.get(RequiredFields.gsl_link_bandwidth))
                 # --- link related ---
                 # --- routing protocol ---
                 self.routing_protocol = selected_config_data.get(RequiredFields.routing_protocol, None)
                 self.routing_protocol = mtm.RoutingProtocols.convert_str_to_routing_protocol(self.routing_protocol)
+                self.hello_interval = int(selected_config_data.get(RequiredFields.hello_interval, None))
+                self.router_dead_interval = int(selected_config_data.get(RequiredFields.router_dead_interval, None))
+                self.poll_interval = int(selected_config_data.get(RequiredFields.poll_interval, None))
+                self.retransmission_interval = int(selected_config_data.get(RequiredFields.retransmission_interval, None))
                 # --- routing protocol ---
                 # --- lipsin app ---
-                self.lipsin_apps = ConfigReader.resolve_lipsin_apps(selected_config_data.get(RequiredFields.lipsin_apps, None))
+                self.lipsin_apps = ConfigReader.resolve_lipsin_apps(
+                    selected_config_data.get(RequiredFields.lipsin_apps, None))
                 # --- lipsin app ---
                 # --- ground stations ---
-                self.ground_stations = ConfigReader.resolve_ground_stations(selected_config_data.get(RequiredFields.ground_stations, None))
+                self.ground_stations = ConfigReader.resolve_ground_stations(
+                    selected_config_data.get(RequiredFields.ground_stations, None))
                 # --- ground stations ---
 
     @classmethod
@@ -132,7 +161,7 @@ class ConfigReader:
 
     @classmethod
     def resolve_lipsin_apps(cls, lipsin_apps_str_list):
-        print(lipsin_apps_str_list)
+        # print(lipsin_apps_str_list)
         lipsin_apps = []
         if lipsin_apps_str_list[0] is None:
             return lipsin_apps
@@ -142,7 +171,7 @@ class ConfigReader:
             destinations = [int(item) for item in destinations]
             lipsin_app = lam.LipsinApp(source=source, destinations=destinations)
             lipsin_apps.append(lipsin_app)
-        print(lipsin_apps)
+        # print(lipsin_apps)
         return lipsin_apps
 
     def print_loaded_info(self):
@@ -156,12 +185,20 @@ class ConfigReader:
         {RequiredFields.constellation_type}: {self.constellation_type}
         {RequiredFields.orbit_number}: {self.orbit_number}
         {RequiredFields.sat_per_orbit}: {self.sat_per_orbit}
+        {RequiredFields.area_orbit_count}: {self.area_orbit_count}
+        {RequiredFields.area_sat_per_orbit}: {self.area_sat_per_orbit}
         {RequiredFields.inclination}: {self.inclination}
         {RequiredFields.starting_phase}: {self.starting_phase}
         {RequiredFields.altitude}: {self.altitude}
         {RequiredFields.satellite_gsl_interface_number}: {self.satellite_gsl_interface_number}
-        {RequiredFields.routing_protocol}: {self.routing_protocol}
+        {RequiredFields.start_to_fail}: {self.start_to_fail}
         ================== constellation_related_fields ==================
+        ================== routing protocol fields =======================
+        {RequiredFields.routing_protocol}: {self.routing_protocol}
+        {RequiredFields.hello_interval}: {self.hello_interval}
+        {RequiredFields.router_dead_interval}: {self.router_dead_interval}
+        {RequiredFields.poll_interval}: {self.poll_interval}
+        {RequiredFields.retransmission_interval}: {self.retransmission_interval}
         ======================= link_related_fields ======================
         {RequiredFields.isl_link_bandwidth}: {self.isl_link_bandwidth}
         {RequiredFields.gsl_link_bandwidth}: {self.gsl_link_bandwidth}

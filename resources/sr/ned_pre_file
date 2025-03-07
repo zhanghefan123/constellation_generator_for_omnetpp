@@ -10,10 +10,10 @@ import nedFiles.channels.SatToGround;
 import nedFiles.channels.SatToGround_10Mbps;
 import nedFiles.channels.SatToGround_100Mbps;
 import nedFiles.channels.SatToGround_1Gbps;
-import inet.common.scenario.ScenarioManager;
+import inet.projects.sr.sr_node.SRSatellite;
 import inet.networklayer.configurator.ipv4.Ipv4NetworkConfigurator;
-import nedFiles.osgNodes.OspfSatellite;
 import inet.projects.generic_tools.global_module.GlobalModule;
+
 network OsgEarthNet
 {
 	parameters:
@@ -23,8 +23,8 @@ network OsgEarthNet
 		osgEarthScene: OsgEarthScene {
 		}
 		configurator: Ipv4NetworkConfigurator {
-			parameters:
-				config = xmldoc("./address.xml");
-				addStaticRoutes = false;
-				addDefaultRoutes = false;
-		}
+            parameters:
+                config = xml("<config><interface among='**' address='10.x.x.x' netmask='255.255.255.252'/></config>");
+                addStaticRoutes = false;
+                addDefaultRoutes = false;
+        }

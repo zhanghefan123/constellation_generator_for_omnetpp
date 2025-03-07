@@ -113,6 +113,22 @@ class ScriptGeneratorBase:
         result += "\t\t}\n\r"
         return result
 
+    def generate_global_module(self):
+        result = ""
+        result += f"\t\tglobalModule: GlobalModule" + "{\n\r"
+        result += f"\t\t\tparameters:\n\r"
+        result += f"\t\t\t\tstart_to_fail={self.project.constellation.config_reader.start_to_fail};\n\r"
+        result += "\t\t}\n\r"
+        return result
+
+    def generate_scenario_manager(self):
+        result = ""
+        result += f"\t\tscenarioManager: ScenarioManager" + "{\n\r"
+        result += f"\t\t\tparameters:\n\r"
+        result += f'\t\t\t\tscript=xmldoc("scenario.xml");\n\r'
+        result += "\t\t}\n\r"
+        return result
+
     def generateSimTimeIni(self) -> str:
         """
         generate simtime ini par

@@ -21,3 +21,8 @@ simtime-resolution = ns
 **.statistic-recording = false
 **.scalar-recording = false
 **.vector-recording = false
+
+# config the lipsin module
+OsgEarthNet.**.srConfig = xmldoc("./srConfig.xml")
+
+

@@ -28,6 +28,3 @@ network OsgEarthNet
 				addStaticRoutes = false;
 				addDefaultRoutes = false;
 		}
-		globalModule: GlobalModule {
-
-        }

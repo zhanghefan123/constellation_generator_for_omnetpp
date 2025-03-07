@@ -29,5 +29,4 @@ network OsgEarthNet
                 addDefaultRoutes = false;
         }
         globalModule: GlobalModule {
-
         }

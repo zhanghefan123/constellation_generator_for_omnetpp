@@ -24,6 +24,10 @@ class Constellation:
             self.physicalLinkIdMap = {}  # map from (source_sat_id, dest_sat_id) to physical link id
             self.physicalLinksGeneration()
             self.virtualLinksGeneration()
+        elif self.config_reader.routing_protocol == mtm.RoutingProtocols.SR:
+            self.nodeOwnLipsinLinksMap = {}
+            self.physicalLinkIdMap = {}
+            self.physicalLinksGeneration()  # SR 仅仅需要生成的是物理链路就行了，而不需要进行虚拟链路的生成
 
     def constellationSatellitesGeneration(self):
         """
@@ -69,6 +73,23 @@ class Constellation:
                                                           [orbitNormal[0], orbitNormal[1], orbitNormal[2]],
                                                           startingPhase, altitude)
                     self.satellites.append(singleSatellite)
+        # =============== generate corresponding area for satellite ===============
+        vertical_areas = sat_per_orbit / self.config_reader.area_sat_per_orbit
+        for orbitId in range(0, orbit_number):
+            for i in range(sat_per_orbit * orbitId, sat_per_orbit * (orbitId + 1)):
+                horizontal_area_index = (orbitId // self.config_reader.area_orbit_count) * vertical_areas
+                vertical_area_index = (i % sat_per_orbit) // self.config_reader.area_sat_per_orbit
+                area_id = horizontal_area_index + vertical_area_index
+                self.satellites[i].area = int(area_id + 1)
+        for line in range(0, sat_per_orbit):
+            for column in range(0, orbit_number):
+                satellite_index = column * sat_per_orbit + line
+                if column != (orbit_number - 1):
+                    print(f"{satellite_index}: {self.satellites[satellite_index].area}", end=",")
+                else:
+                    print(f"{satellite_index}: {self.satellites[satellite_index].area}", end="")
+            print()
+        # =============== generate corresponding area for satellite ===============
 
     def constellationInterSatelliteLinksGeneration(self):
         """

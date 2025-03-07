@@ -1,6 +1,7 @@
 from generator.ospf import ScriptGeneratorOspf
 from generator.lipsin import ScriptGeneratorLipsin
 from generator.none import ScriptGeneratorNone
+from generator.sr import ScriptGeneratorSR
 from loguru import logger
 from modules import ModuleTypes as mtm
 
@@ -19,6 +20,8 @@ class ScriptGeneratorFactory:
             final_generator = ScriptGeneratorOspf.ScriptGeneratorOspf(self.project)
         elif self.protocol == mtm.RoutingProtocols.LIPSIN:
             final_generator = ScriptGeneratorLipsin.ScriptGeneratorLipsin(self.project)
+        elif self.protocol == mtm.RoutingProtocols.SR:
+            final_generator = ScriptGeneratorSR.ScriptGeneratorSR(self.project)
         else:
             logger.error("Unknown routing protocol: " + str(self.protocol))
             raise ValueError("Unknown routing protocol: " + str(self.protocol))

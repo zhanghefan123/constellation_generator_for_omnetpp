@@ -1,0 +1,4 @@
+<script>
+    <at t="60s"><shutdown module="SAT7.eth[1]"/></at>
+    <at t="60s"><shutdown module="SAT8.eth[0]"/></at>
+</script>

@@ -16,6 +16,7 @@ class Satellite:
         self.startingPhase = startingPhase
         self.altitude = altitude
         self.interfaceIndex = 0
+        self.area = None  # 卫星所处的区域
 
     def __str__(self):
         """

@@ -1,6 +1,6 @@
 default:
   # -------- project related questions --------
-  project_name: sr_tnse_test
+  project_name: lipsin_tnse_test
   simulation_time: 100
   check_polar_entering: false
   # -------- project related questions --------
@@ -21,7 +21,7 @@ default:
   gsl_link_bandwidth: 10 Mbps
   # -------- link related questions --------
   # ---------- routing protocol questions ----------
-  routing_protocol: SR
+  routing_protocol: LIPSIN
   hello_interval: 1
   router_dead_interval: 4
   poll_interval: 4

@@ -28,6 +28,7 @@ class RoutingProtocols(Enum):
     NONE = 0,
     IP_OSPF = 1,
     LIPSIN = 2,
+    SR = 3
 
     def __str__(self):
         return str(self.name)
@@ -40,5 +41,7 @@ class RoutingProtocols(Enum):
             return RoutingProtocols.IP_OSPF
         elif routing_protocol_str == "LIPSIN":
             return RoutingProtocols.LIPSIN
+        elif routing_protocol_str == "SR":
+            return RoutingProtocols.SR
         else:
             raise ValueError("Unknown routing protocol: " + routing_protocol_str)
